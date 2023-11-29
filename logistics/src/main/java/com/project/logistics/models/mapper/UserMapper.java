@@ -12,6 +12,5 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     Users toUser(UserCreationDto userCreationDto);
 
-
     UserDto toUserDto(Users users);
 }

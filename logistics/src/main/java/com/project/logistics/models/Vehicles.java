@@ -16,12 +16,9 @@ public class Vehicles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String type;
-
     private Integer max_weight;
 
     @OneToMany(mappedBy = "vehicle")
     private Collection<Routes> routes;
-
 }

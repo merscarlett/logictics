@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -15,13 +17,14 @@ public class Routes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "route")
+    private Collection<Orders> orders;
+
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicles vehicle;
 
     private String cityFrom;
     private String cityTo;
-    private String time;
     private int price;
-
 }
