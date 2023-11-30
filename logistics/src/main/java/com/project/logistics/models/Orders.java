@@ -20,18 +20,11 @@ public class Orders {
     private Routes route;
 
     @ManyToOne
-    @JoinColumn(name = "cargo_id")
-    private Cargos cargo;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
 
     private String cityFrom;
-
     private String cityTo;
-
-    private Integer price;
-
-
+    private Double cargoWeight;
+    private Double price;
 }
