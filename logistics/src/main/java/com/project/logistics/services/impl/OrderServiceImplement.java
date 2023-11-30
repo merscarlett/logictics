@@ -36,8 +36,13 @@ public class OrderServiceImplement implements OrderService {
         Vehicles matchingVehicle = vehiclesRepository.findById(selectedRoute.getVehicle().getId())
                 .orElseThrow(() -> new RuntimeException("Помилка: транспорт не знайдено"));
 
-        selectedRoute.setVehicle(matchingVehicle);
+        // Перевірте, чи введена ціна є меншою або рівною ціні маршруту
+        if (newOrder.getPrice() > selectedRoute.getPrice()) {
+            newOrder.setPrice((double) selectedRoute.getPrice());
+        }
 
+
+        selectedRoute.setVehicle(matchingVehicle);
         newOrder.setRoute(selectedRoute);
 
         ordersRepository.save(newOrder);
