@@ -11,8 +11,8 @@ public class OrderCreationDto {
 
     private String cityFrom;
     private String cityTo;
-    private Integer cargoWeight;
-    private Integer price;
+    private Double cargoWeight;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "route_id")
@@ -20,5 +20,5 @@ public class OrderCreationDto {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private Users user = new Users();
 }

@@ -8,6 +8,6 @@ public class OrderDto {
     private Long id;
     private String cityFrom;
     private String cityTo;
-    private Integer cargoWeight;
-    private Integer price;
+    private Double cargoWeight;
+    private Double price;
 }

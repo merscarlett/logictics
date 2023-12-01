@@ -1,6 +1,7 @@
 package com.project.logistics.security;
 
 import com.project.logistics.models.Users;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +15,13 @@ public class UserDetailsImpl implements UserDetails {
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
+    @Getter
+    private final Long userId;
+
     public UserDetailsImpl( Users user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
+        this.userId = user.getId();
         this.authorities = Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
     }
 
@@ -54,6 +59,4 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }

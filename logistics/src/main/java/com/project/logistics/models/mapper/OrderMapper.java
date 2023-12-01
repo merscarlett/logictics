@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface OrderMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", source = "user")
     Orders toOrder(OrderCreationDto orderCreationDto);
 
     OrderDto toOrderDto(Orders orders);
