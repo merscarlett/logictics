@@ -1,5 +1,6 @@
 package com.project.logistics.controllers;
 
+import com.project.logistics.exception.UserNotFoundException;
 import com.project.logistics.models.Orders;
 import com.project.logistics.models.dto.OrderCreationDto;
 import com.project.logistics.models.dto.OrderDto;
@@ -10,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -28,24 +28,20 @@ public class OrderController {
 
         Long userId = getUserIdFromAuthentication(authentication);
 
-        orderCreationDto.getUser().setId(userId);
+        Orders orderEntity = orderMapper.toOrder(orderCreationDto);
+        orderEntity.getUser().setId(userId);
 
-        Orders orders = orderService.addOrder(orderMapper.toOrder(orderCreationDto));
+        Orders savedOrder = orderService.addOrder(orderEntity);
 
-        return new ResponseEntity<>(orderMapper.toOrderDto(orders), HttpStatus.CREATED);
+        return new ResponseEntity<>(orderMapper.toOrderDto(savedOrder), HttpStatus.CREATED);
     }
 
     private Long getUserIdFromAuthentication(Authentication authentication) {
-
-        return getUserIdFromUserDetails((UserDetails) authentication.getPrincipal());
-    }
-
-    private Long getUserIdFromUserDetails(UserDetails userDetails) {
-        if (userDetails instanceof UserDetailsImpl) {
-            return ((UserDetailsImpl) userDetails).getUserId();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetailsImpl) {
+            return ((UserDetailsImpl) authentication.getPrincipal()).getUserId();
+        } else {
+            throw new UserNotFoundException("Пройдіть автентифікацію");
         }
-
-        return null;
     }
 }
 
