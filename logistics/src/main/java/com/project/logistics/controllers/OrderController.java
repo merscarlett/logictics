@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -42,6 +44,12 @@ public class OrderController {
         } else {
             throw new UserNotFoundException("Пройдіть автентифікацію");
         }
+    }
+
+    @GetMapping("/user-orders/{userId}")
+    public ResponseEntity<List<OrderDto>> getUserOrders(@PathVariable Long userId) {
+        List<OrderDto> userOrders = orderService.getUserOrders(userId);
+        return ResponseEntity.ok(userOrders);
     }
 }
 
